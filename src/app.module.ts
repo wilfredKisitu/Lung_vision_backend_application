@@ -8,9 +8,15 @@ import { AuthModule } from './auth/auth.module';
 import { DiagnoseModule } from './diagnose/diagnose.module';
 import { Diagnosis } from './Entities/diagnosis.entity';
 import { CtDiagnosisModule } from './ct-diagnosis/ct-diagnosis.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'uploads'), 
+      serveRoot: '/upload', 
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
