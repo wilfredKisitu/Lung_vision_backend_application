@@ -7,6 +7,7 @@ import { User } from './Entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { DiagnoseModule } from './diagnose/diagnose.module';
 import { Diagnosis } from './Entities/diagnosis.entity';
+import { CtDiagnosisModule } from './ct-diagnosis/ct-diagnosis.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { Diagnosis } from './Entities/diagnosis.entity';
     }),
     UserModule,
     AuthModule,
-    DiagnoseModule
+    DiagnoseModule,
+    CtDiagnosisModule
   ],
   controllers: [AppController],
   providers: [AppService],
