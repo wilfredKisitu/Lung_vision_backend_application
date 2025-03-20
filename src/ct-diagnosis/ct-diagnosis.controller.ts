@@ -1,4 +1,4 @@
-import { Controller, Param, ParseIntPipe, Post, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Post, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import { ctDiagnoseService } from './ct-diagnosis.service';
@@ -9,6 +9,11 @@ import { Request } from 'express';
 @Controller('ctDiagnose')
 export class ctDiagnoseController {
   constructor(private readonly diagnoseService: ctDiagnoseService) {}
+
+  @Get('user/:userId')
+  async getUserDiagnoses(@Param('userId', ParseIntPipe) userId: number) {
+    return this.diagnoseService.getAllDiagnosesForUser(userId);
+  }
 
   @Post('upload/:userId')
   @UseInterceptors(
@@ -31,9 +36,7 @@ export class ctDiagnoseController {
     const serverUrl = `${req.protocol}://${req.get('host')}`; // Dynamic base URL
     const imageDynamicPath = `${serverUrl}/upload/${file.filename}`
     const imagePath = path.resolve(process.cwd(), 'uploads', file.filename);
-    console.log(imageDynamicPath)
-    console.log(imagePath)
-    const result = await this.diagnoseService.diagnoseWithRoboflow(imagePath);
+    const result = await this.diagnoseService.diagnoseWithRoboflow(imagePath, userId, imageDynamicPath);
     return { imageUrl: `${imageDynamicPath}`, result };
   }
 }

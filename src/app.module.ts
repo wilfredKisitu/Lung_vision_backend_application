@@ -10,6 +10,7 @@ import { Diagnosis } from './Entities/diagnosis.entity';
 import { CtDiagnosisModule } from './ct-diagnosis/ct-diagnosis.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { CtDiagnosis } from './Entities/ct_diagnoses';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import * as path from 'path';
       username: 'lungV_1',
       password: 'lungV_1',
       database: 'lungv',
-      entities: [User, Diagnosis],
+      entities: [User, Diagnosis, CtDiagnosis],
       synchronize: true // reset to false in production
     }),
     UserModule,
